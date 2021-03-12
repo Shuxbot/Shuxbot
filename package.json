@@ -1,0 +1,28 @@
+{
+  "name": "shuxbot",
+  "version": "1.0.0",
+  "description": "ShuxTeam Discord bot.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node -r dotenv/config dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afriguez/shuxbot.git"
+  },
+  "author": "afriguez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/afriguez/shuxbot/issues"
+  },
+  "homepage": "https://github.com/afriguez/shuxbot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "firebase-admin": "^9.4.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
+}
