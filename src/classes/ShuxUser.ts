@@ -135,15 +135,11 @@ export class ShuxUser {
     let uData = await this.get();
     let warns = uData.warns - amount;
 
-    if (warns <= 0) {
-      warns = 0;
-    }
-
     db.ref(this.ref)
       .update({ warns: warns })
       .then(() => {
         log.warn(
-          `Se le han retirado ${warns} warns a ${this.user.id} - ${this.user}`
+          `Se le han retirado ${amount} warns a ${this.user.id} - ${this.user}`
         );
       })
       .catch((error) => log.error(error.message));
