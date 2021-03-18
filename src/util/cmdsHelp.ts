@@ -93,6 +93,12 @@ export const cmdsHelp = {
     options: undefined,
     desc: "Mutea a un usuario de un canal",
   },
+  whois: {
+    level: 2,
+    usage: "sh!whois @user",
+    options: undefined,
+    desc: "Muestra la informacion principal de un usuario",
+  },
   ticket: {
     level: 3,
     usage: "sh!ticket @user",
