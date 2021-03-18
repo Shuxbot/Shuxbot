@@ -152,7 +152,7 @@ export const getopts = (
  */
 
 export const getValue = (arr: string[], option: string): string | undefined => {
-  return arr.find((v, i) => arr[i - 1] == option);
+  return arr.find((_, i) => arr[i - 1] == option);
 };
 
 /**
