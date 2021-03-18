@@ -17,7 +17,7 @@ export let channels: any;
 
 /**
  * Roles object
- * { rolename: [ { id: '', perms: '' } ] }
+ * { rolename: { id: '', perms: '' } }
  */
 export let roles: any;
 
