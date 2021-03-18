@@ -43,8 +43,8 @@ export class EasterEggs {
       this.msg.channel.send(this.asuka[gif]);
       return;
     } else if (probability(0.01)) {
-      let gif = Math.floor(Math.random() * this.rei.length);
-      this.msg.channel.send(this.rei[gif]);
+      let img = Math.floor(Math.random() * this.rei.length);
+      this.msg.channel.send(this.rei[img]);
       return;
     }
   }
