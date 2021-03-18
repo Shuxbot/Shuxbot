@@ -81,6 +81,12 @@ export const cmdsHelp = {
     options: undefined,
     desc: "Remueve warns a un usuario",
   },
+  blacklist: {
+    level: 1,
+    usage: "sh!blacklist @user razon",
+    options: undefined,
+    desc: "Blacklistea o desblacklistea a un usuario",
+  },
   warn: {
     level: 2,
     usage: "sh!warn @user razon",
