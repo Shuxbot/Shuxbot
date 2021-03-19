@@ -23,6 +23,7 @@
     "firebase-admin": "^9.4.2"
   },
   "devDependencies": {
+    "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   }
 }

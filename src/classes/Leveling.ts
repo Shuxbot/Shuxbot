@@ -25,7 +25,9 @@ export class Leveling {
       let newPoints = points + msg.content.length * 0.003;
 
       db.ref(sUser.ref)
-        .update({ points: newPoints })
+        .update({
+          points: newPoints,
+        })
         .then((_) => {
           let level = Math.floor(getLevelByPoints(points));
           let newLevel = Math.floor(getLevelByPoints(newPoints));
