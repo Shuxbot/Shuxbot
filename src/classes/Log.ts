@@ -17,7 +17,7 @@ export class Log {
    * @returns {void} Nothing
    */
 
-  private async log(log: any): Promise<void> {
+  private log(log: any): void {
     if (!this.isLoggeable) return;
     if (!channels.logs) return;
 

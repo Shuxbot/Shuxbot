@@ -19,7 +19,7 @@ exports.run = (msg: Message, args: string[]) => {
   let user = member.user;
   let reason = args.join(" ");
 
-  if (user.id === msg.author.id)
+  if (user.id == msg.author.id)
     return msg.reply("NO puedes warnearte a ti mismo");
 
   if (!reason)

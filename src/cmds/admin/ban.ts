@@ -14,7 +14,7 @@ exports.run = async (msg: Message, args: string[]) => {
   args.shift();
   let reason = args.join(" ");
 
-  if (member.id === msg.author.id)
+  if (member.id == msg.author.id)
     return msg.reply("NO puedes banearte a ti mismo!");
 
   if (!reason) return msg.channel.send("Debes especificar una razon!");

@@ -106,7 +106,7 @@ export class ShuxUser {
     let uData = await this.get();
     let warns = uData.warns + 1;
 
-    if (warns === 2) {
+    if (warns == 2) {
       this.member!.kick(reason).catch((error) => log.error(error.message));
     } else if (warns >= 3) {
       this.member!.ban({ reason: reason }).catch((error) =>

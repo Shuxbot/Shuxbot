@@ -47,7 +47,7 @@ export const sendWarningMessage = async (
  */
 
 export const getGuild = (id: string): Guild | undefined => {
-  return shux.guilds.cache.find((sv) => sv.id === id);
+  return shux.guilds.cache.find((sv) => sv.id == id);
 };
 
 /**

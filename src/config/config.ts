@@ -45,13 +45,13 @@ export type data = "channels" | "roles" | "reactions";
 export const refreshData = async (data: data): Promise<void> => {
   let refreshedData = await getFromDB(`server/${data}`);
 
-  if (data === "channels") {
+  if (data == "channels") {
     channels = refreshedData;
 
     for (let chName in channels) {
-      if (!log.isLoggeable) log.isLoggeable = chName === "logs";
+      if (!log.isLoggeable) log.isLoggeable = chName == "logs";
     }
-  } else if (data === "reactions") reactions = refreshedData;
+  } else if (data == "reactions") reactions = refreshedData;
   else [roles, colors] = sortRoles(refreshedData);
 
   log.warn(`Se ha actualizado la referencia: server/${data}`);
@@ -60,7 +60,7 @@ export const refreshData = async (data: data): Promise<void> => {
 /**
  * Sorts roles and colors
  * @param {any} rolesObject - The roles object
- * @returns {[any, any]} - Array with roles and colores [roles, colors]
+ * @returns {[any, any]} - Array with roles and colors [roles, colors]
  */
 
 export const sortRoles = (rolesObject: any): [any, any] => {
