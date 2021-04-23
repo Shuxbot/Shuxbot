@@ -128,7 +128,7 @@ export const initialize = async (): Promise<void> => {
     }
   }
 
-  log.info(initLog);
+  log.warn(initLog);
 };
 
 /** Object containing warning messages */
@@ -157,9 +157,9 @@ export const warningMessages = {
 export const ticketMessage = ` **Su ticket ha sido abierto.**
   Para cerrar el ticket: reaccione de nuevo en el mismo canal desde el que abrió el ticket.
 
-  Por favor espere a que un técnico este libre!
-
   Recuerda enviar directamente el **problema** y las **specs** del dispositivo.
   En caso de que necesite ayuda con un **presupuesto**, indique la moneda y el país.
+
+  Por favor espere a que un técnico este libre!
 
   Si el ticket no cumple con estos requisitos será cerrado en las próximas 12 horas.`;

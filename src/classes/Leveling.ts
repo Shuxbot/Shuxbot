@@ -113,12 +113,16 @@ export class Leveling {
     let username: string = member.user.username;
     let nickname: string = member.nickname!;
 
-    let formattedNickname;
+    if (username.length > 25) {
+      username = username.slice(0, 25);
+    }
+
+    let formattedNickname: string;
 
     if (showlevel) {
       formattedNickname = `${username} - ${Math.floor(level)}`;
     } else {
-      formattedNickname = `${username}`;
+      formattedNickname = username;
     }
 
     if (nickname) {
