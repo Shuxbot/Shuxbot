@@ -122,7 +122,7 @@ export class Leveling {
     if (showlevel) {
       formattedNickname = `${username} - ${Math.floor(level)}`;
     } else {
-      formattedNickname = username;
+      formattedNickname = '';
     }
 
     if (nickname) {
