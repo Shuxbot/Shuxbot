@@ -45,7 +45,7 @@ export class ShuxUser {
 
     db.ref(this.ref)
       .set(data)
-      .catch((error) => console.error(error.message));
+      .catch((error) => log.error(error.message));
     return data;
   }
 

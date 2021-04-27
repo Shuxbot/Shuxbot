@@ -22,8 +22,6 @@ exports.run = async (msg: Message, args: string[]) => {
 
   if (reaction) [, [reaction]] = emojiCounter(reaction);
 
-  console.log(roles[`${role}`]);
-  console.log(roles);
   if (
     (channel && !channels[`${channel}`]) ||
     (reaction && !reactions[`${messageId}`]) ||

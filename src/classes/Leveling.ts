@@ -131,7 +131,6 @@ export class Leveling {
 
     // update nickname
     member.setNickname(formattedNickname).catch((err) => {
-      console.error(err);
       log.error(`Error al intentar cambiar el nick:
 			 - User: ${member.user} / ${member.user.username}
 			 - Error: ${err.message}
