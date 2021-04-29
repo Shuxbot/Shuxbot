@@ -35,9 +35,6 @@ export const messageHandler = (msg: Message): void => {
   let pLevel = getPrivilegeLevel(msg.member!);
   let cmdsChannel = getChannel(undefined, channelType.cmds);
 
-  console.log(cmdsChannel);
-  console.log(pLevel);
-
   if (pLevel > 2 && cmdsChannel) {
     if (msg.guild!.channels.cache.has(cmdsChannel.id)) {
       if (msg.channel.id !== cmdsChannel.id) {
@@ -52,9 +49,6 @@ export const messageHandler = (msg: Message): void => {
 
   args = args.filter((arg) => /\S/.test(arg));
   args2 = args2.filter((arg) => /\S/.test(arg));
-
-  console.log(args);
-  console.log(args2);
 
   runCommand(msg, args, args2, cmd, pLevel);
 };
