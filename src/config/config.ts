@@ -1,6 +1,6 @@
 // Source imports
 import { Log } from "../classes/Log";
-import { getFromDB } from "../util/utils";
+import { channelType, getChannel, getFromDB } from "../util/utils";
 
 /**
  * Log class instance used everywhere in the bot
@@ -11,25 +11,25 @@ export const shuxSvId = process.env.GUILD!.toString();
 
 /**
  * Channels object
- * { name: { id: '', skip: true } }
+ * { id: { type: number, skip: boolean } }
  */
 export let channels: any;
 
 /**
  * Roles object
- * { rolename: { id: '', perms: '' } }
+ * { rolename: { id: string, perms: string } }
  */
 export let roles: any;
 
 /**
  * Reactions object
- * { msgId: { reaction1: { role: '', remove: true, ticket: false } } }
+ * { msgId: { reaction1: { role: string, remove: boolean, ticket: boolean } } }
  */
 export let reactions: any;
 
 /**
  * Colors object
- * { color: { id: '', level: x, perms: 'color' } }
+ * { color: { id: string, level: number, perms: 'color' } }
  */
 
 export let colors: any;
@@ -47,10 +47,9 @@ export const refreshData = async (data: data): Promise<void> => {
 
   if (data == "channels") {
     channels = refreshedData;
-
-    for (let chName in channels) {
-      if (!log.isLoggeable) log.isLoggeable = chName == "logs";
-    }
+    let logsChannel = getChannel(undefined, channelType.logs);
+    if (logsChannel && !log.isLoggeable) log.isLoggeable = true;
+    console.log(logsChannel);
   } else if (data == "reactions") reactions = refreshedData;
   else [roles, colors] = sortRoles(refreshedData);
 
@@ -92,11 +91,11 @@ export const initialize = async (): Promise<void> => {
   await refreshData("channels");
   initLog += "Channels:\n";
 
-  for (let chName in channels) {
+  for (let chId in channels) {
     initLog += `
-	  ${chName} - <#${channels[chName].id}>
-      - id: ${channels[chName].id}
-	  - skip: ${channels[chName].skip}`;
+	  ${chId} - <#${chId}>
+      - type: ${channels[chId].type}
+	  - skip: ${channels[chId].skip}`;
   }
 
   // Roles
