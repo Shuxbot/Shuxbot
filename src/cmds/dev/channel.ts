@@ -1,55 +1,48 @@
-import { Message } from "discord.js";
+import { GuildChannel, Message } from "discord.js";
 
 // Source imports
 import { db } from "../../config/database";
 import { cmdsHelp } from "../../util/cmdsHelp";
 import { log, refreshData } from "../../config/config";
-import { getopts, getValue, updateMainChannels } from "../../util/utils";
+import { getopts, getValue } from "../../util/utils";
 
 let help = cmdsHelp.channel;
 
 exports.run = async (msg: Message, args: string[]) => {
-  let channel = msg.mentions.channels.first();
-
-  if (!channel) return msg.reply("debes especificar el canal\n" + help.usage);
-  if (
-    channel.name == "tickets" ||
-    channel.name == "shuxcmds" ||
-    channel.name == "logs"
-  )
-    return msg.reply(
-      "no es posible agregar canales con nombres LOGS, SHUXCMDS o TICKETS"
-    );
-
+  let channel:
+    | GuildChannel
+    | string
+    | undefined = msg.mentions.channels.first();
   let options = getopts(args, {
     s: "--skip",
-    l: "--logs",
-    sc: "--shuxcmds",
-    t: "--tickets",
+    c: "--channel",
+    t: "--type",
   });
+  if (!channel) channel = getValue(options, "channel");
+
+  let type = Number(getValue(options, "type"));
   let skip = getValue(options, "skip") == "true";
 
-  let logs = getValue(options, "logs") == "true";
-  if (logs) return updateMainChannels(msg, "logs");
+  if (!channel)
+    return msg.reply(
+      "debes especificar la ID o taguear al canal!\n" + help.usage
+    );
+  if (isNaN(type))
+    return msg.reply("oops! el tipo debe ser numerico!!!\n" + help.usage);
 
-  let shuxcmds = getValue(options, "shuxcmds") == "true";
-  if (shuxcmds) return updateMainChannels(msg, "shuxcmds");
-
-  let tickets = getValue(options, "tickets") == "true";
-  if (tickets) return updateMainChannels(msg, "tickets");
-
-  db.ref(`server/channels/${channel.name.toLocaleLowerCase()}`)
+  db.ref(`server/channels/${channel}`)
     .set({
-      id: channel.id,
+      type: type,
       skip: skip,
     })
     .then(async () => {
       await refreshData("channels");
 
       log.info(`Se ha agregado un canal
-			   - canal: ${channel} - id: ${channel!.id}
+			   - canal: <#${channel}> - id: ${channel}
 			   - autor: ${msg.author} - id: ${msg.author.id}
-			   - skip: ${skip}`);
+			   - skip: ${skip}
+			   - type: ${type}`);
     })
     .catch((error) => {
       msg.reply("oops! ha ocurrido un error");
