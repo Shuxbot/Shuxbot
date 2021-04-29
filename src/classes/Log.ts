@@ -1,8 +1,8 @@
 import { MessageEmbed, TextChannel } from "discord.js";
 
 // Source imports
-import { getGuild } from "../util/utils";
-import { channels, shuxSvId } from "../config/config";
+import { channelType, getChannel, getGuild } from "../util/utils";
+import { shuxSvId } from "../config/config";
 
 /** Logger class */
 export class Log {
@@ -19,12 +19,14 @@ export class Log {
 
   private log(log: any): void {
     if (!this.isLoggeable) return;
-    if (!channels.logs) return;
+
+    let logsCh = getChannel(undefined, channelType.logs);
+    if (!logsCh) return;
 
     let guild = getGuild(shuxSvId);
-    if (!guild!.channels.cache.has(channels.logs.id)) return;
+    if (!guild!.channels.cache.has(logsCh.id)) return;
 
-    let logsChannel = new TextChannel(guild!, { id: channels.logs.id });
+    let logsChannel = new TextChannel(guild!, { id: logsCh.id });
     logsChannel.send(log);
   }
 

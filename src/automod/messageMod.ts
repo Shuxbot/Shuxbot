@@ -2,12 +2,14 @@ import { Message } from "discord.js";
 
 // Source imports
 import {
+  channelType,
   emojiCounter,
+  getChannel,
   getPrivilegeLevel,
   sendWarningMessage,
 } from "../util/utils";
 import { ShuxUser } from "../classes/ShuxUser";
-import { channels, warningMessages } from "../config/config";
+import { warningMessages } from "../config/config";
 
 let user: ShuxUser;
 
@@ -20,10 +22,8 @@ let user: ShuxUser;
 export const messageMod = (msg: Message): void => {
   user = new ShuxUser(msg.author);
 
-  for (const ch in channels) {
-    if (msg.channel.id === channels[ch].id)
-      if (channels[ch].skip === true) return;
-  }
+  let currChannel = getChannel(msg.channel.id, channelType.common);
+  if (currChannel && currChannel.skip) return;
 
   let pLevel = getPrivilegeLevel(msg.member!);
   if (pLevel < 3) return;

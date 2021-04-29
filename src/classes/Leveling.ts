@@ -8,10 +8,15 @@ import {
 
 // Source imports
 import { ShuxUser } from "./ShuxUser";
+import { log } from "../config/config";
 import { db } from "../config/database";
 import { colors } from "../config/config";
-import { channels, log } from "../config/config";
-import { getActualPoints, getLevelByPoints } from "../util/utils";
+import {
+  channelType,
+  getActualPoints,
+  getChannel,
+  getLevelByPoints,
+} from "../util/utils";
 
 /** Leveling class */
 export class Leveling {
@@ -41,11 +46,12 @@ export class Leveling {
 
             Leveling.formatNickname(msg.member!, newLevel, uData.showlvl);
             let replyChannel: any = msg.channel;
+            let cmdsChannel = getChannel(undefined, channelType.cmds);
 
-            if (channels.shuxcmds) {
-              if (msg.guild!.channels.cache.has(channels.shuxcmds.id)) {
+            if (cmdsChannel) {
+              if (msg.guild!.channels.cache.has(cmdsChannel.id)) {
                 replyChannel = new TextChannel(msg.guild!, {
-                  id: channels.shuxcmds.id,
+                  id: cmdsChannel.id,
                 });
               }
             }
@@ -122,7 +128,7 @@ export class Leveling {
     if (showlevel) {
       formattedNickname = `${username} - ${Math.floor(level)}`;
     } else {
-      formattedNickname = '';
+      formattedNickname = "";
     }
 
     if (nickname) {

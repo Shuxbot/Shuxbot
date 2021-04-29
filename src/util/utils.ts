@@ -3,7 +3,7 @@ import { Guild, GuildMember, Message } from "discord.js";
 // Source imports
 import { shux } from "..";
 import { db } from "../config/database";
-import { log, refreshData, roles } from "../config/config";
+import { channels, log, roles } from "../config/config";
 
 /** Enum with the privilege levels */
 export enum privilegeLevel {
@@ -212,38 +212,6 @@ export const remove = async (ref: string): Promise<string> => {
   return msg;
 };
 
-type mainChs = "logs" | "shuxcmds" | "tickets";
-
-/**
- * Updates main channels LOGS, SHUXCMDS and category TICKETS
- * @async
- * @param {Message} msg - The message object
- * @param {string} ch - The channel
- * @returns {null | void} Nothing or null if theres no channel mention
- */
-
-export const updateMainChannels = async (
-  msg: Message,
-  ch: mainChs
-): Promise<null | void> => {
-  let channel = msg.mentions.channels.first();
-  if (!channel) return null;
-
-  db.ref(`server/channels/${ch}`)
-    .set({ id: channel.id, skip: false })
-    .then(async () => {
-      await refreshData("channels");
-
-      log.warn(`Se ha actualizado el canal ${ch.toLocaleUpperCase()}
-			   - Nuevo canal: ${channel} - id ${channel!.id}`);
-      msg.reply("Actualizado.");
-    })
-    .catch((error) => {
-      msg.reply("oosp! ha ocurrido un error");
-      log.error(error.message);
-    });
-};
-
 /**
  * Gets user level based on points
  * @param {number} points - The user points
@@ -262,4 +230,36 @@ export const getLevelByPoints = (points: number): number => {
 
 export const getActualPoints = (points: number): number => {
   return Math.floor(points < 1 ? 1 : points);
+};
+
+/** Channel types enum */
+export enum channelType {
+  common,
+  logs,
+  cmds,
+  tickets,
+}
+
+/**
+ * Returns the first channel that meets the condition
+ * chId == id || type == ch.type
+ * @param {channelType} type - The channel type
+ * @returns {{ id: string, type: number; skip: boolean }} the channel ID
+ */
+
+export const getChannel = (
+  id: string = "",
+  type: channelType
+): { id: string; type: number; skip: boolean } | null => {
+  for (let chId in channels) {
+    if (chId == id || channels[chId].type == type) {
+      let channel = {
+        id: chId,
+        type: channels[chId].type,
+        skip: channels[chId].skip,
+      };
+      return channel;
+    }
+  }
+  return null;
 };

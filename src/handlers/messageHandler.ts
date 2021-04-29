@@ -2,6 +2,8 @@ import { Message } from "discord.js";
 
 // Source imports
 import {
+  channelType,
+  getChannel,
   getPrivilegeLevel,
   privilegeLevel,
   sendWarningMessage,
@@ -9,7 +11,7 @@ import {
 import { Leveling } from "../classes/Leveling";
 import { messageMod } from "../automod/messageMod";
 import { EasterEggs } from "../classes/EasterEggs";
-import { channels, warningMessages } from "../config/config";
+import { warningMessages } from "../config/config";
 
 const prefixReg: RegExp = /(s(h|hux|hx|x)\!)/;
 
@@ -31,10 +33,14 @@ export const messageHandler = (msg: Message): void => {
   if (!prefix) return;
 
   let pLevel = getPrivilegeLevel(msg.member!);
+  let cmdsChannel = getChannel(undefined, channelType.cmds);
 
-  if (pLevel > 2 && channels.shuxcmds) {
-    if (msg.guild!.channels.cache.has(channels.shuxcmds.id)) {
-      if (msg.channel.id !== channels.shuxcmds.id) {
+  console.log(cmdsChannel);
+  console.log(pLevel);
+
+  if (pLevel > 2 && cmdsChannel) {
+    if (msg.guild!.channels.cache.has(cmdsChannel.id)) {
+      if (msg.channel.id !== cmdsChannel.id) {
         sendWarningMessage(msg, warningMessages.wrongChannel.cmds);
         return;
       }
@@ -46,6 +52,9 @@ export const messageHandler = (msg: Message): void => {
 
   args = args.filter((arg) => /\S/.test(arg));
   args2 = args2.filter((arg) => /\S/.test(arg));
+
+  console.log(args);
+  console.log(args2);
 
   runCommand(msg, args, args2, cmd, pLevel);
 };
