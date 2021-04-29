@@ -110,5 +110,8 @@ export const inviteMod = (msg: Message): void => {
     user.warn(`Invitacion de discord: ${match[0]}`);
     msg.delete();
     sendWarningMessage(msg, warningMessages.invite);
+    msg.reply(
+      "ha sido warneado\n- Estan prohibidas las invitaciones a servidores de Discord"
+    );
   }
 };
