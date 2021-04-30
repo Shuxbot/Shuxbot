@@ -73,7 +73,7 @@ export class TicketManager {
       log.error(`NO se encontró la categoria tickets.
 
 				  Para agregarla a la base de datos utilice:
-				  - **sh!channel <#id-categoria-tickets> --tickets**`);
+				  - **sh!channel category-id --type 3**`);
       return;
     }
 

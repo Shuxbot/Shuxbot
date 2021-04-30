@@ -238,6 +238,8 @@ export enum channelType {
   logs,
   cmds,
   tickets,
+  admin,
+  suggestions,
 }
 
 /**
