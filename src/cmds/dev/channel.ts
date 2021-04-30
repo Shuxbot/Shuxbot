@@ -19,6 +19,7 @@ exports.run = async (msg: Message, args: string[]) => {
     t: "--type",
   });
   if (!channel) channel = getValue(options, "channel");
+  else channel = channel.id;
 
   let type = Number(getValue(options, "type"));
   let skip = getValue(options, "skip") == "true";
