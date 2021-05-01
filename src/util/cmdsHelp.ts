@@ -52,13 +52,12 @@ export const cmdsHelp = {
   },
   channel: {
     level: 0,
-    usage: "sh!channel #channel --skip (opcional)",
+    usage: "sh!channel #channel | --channel channel-id --skip (opcional)",
     options: `
 	    --skip (-s) => evitar que se tomen acciones de moderacion en el canal
 		--no-skip => toma acciones de moderacion en el canal
-		--logs (-l) => usar este como el canal de logs
-		--shuxcmds (-sc) => usar este como el canal de comandos
-		--tickets (-t) => usar esta categoria como la categoria de tickets
+		--channel (-c) => al no poder taguear el canal se indica la id con este parametro
+		--type (-t) => usar este como el canal de logs
 	  `,
     desc:
       "Agrega canales a la base de datos e indica si se debe moderar o no en estos",
