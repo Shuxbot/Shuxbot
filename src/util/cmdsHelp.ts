@@ -1,72 +1,72 @@
 export const cmdsHelp = {
   reaction: {
     level: 0,
-    usage:
-      "sh!reaction --reaction :emoji: --message id #channel @role --remove | --no-remove (opcional)",
+    usage: "sh!reaction -r :emoji: -m msgId #channel @role",
     options: `
-		--reaction (-r) => indica la reaccion
-		--message (-m) => indica la id del mensaje
-		--remove (-rm) => al usarse, indica que se debe quitar el rol si se reacciona nuevamente
-		--no-remove => es equivalente a no usar --remove
+		--reaction (-r) => Reaccion
+		--message (-m) => Id del mensaje
+		--remove (-rm) => Remover el rol al reaccionar denuevo
+		--no-remove => No quitar el rol al reaccionar denuevo
 		--ticket (-t) => Abrira un ticket si el usuario que reaccione tiene el rol especificado
-		--no-ticket => No abrira tickets al reaccionar, se tenga o no el rol especificado
-
-		Si se agrega algo despues de --remove o --ticket su valor sera falso, por lo tanto no se removera el rol al reaccionar denuevo ni se abriran tickets`,
+		--no-ticket => No abrira tickets al reaccionar, se tenga o no el rol especificado`,
     desc:
-      "Agrega una reaccion a un mensaje X para dar el rol especificado a quien reaccione o para abrir tickets si el que reacciona tiene el rol especificado",
+      "Agrega una reaccion a un mensaje para dar el rol especificado a quien reaccione o para abrir tickets si el que reacciona tiene el rol especificado",
   },
   remove: {
     level: 0,
-    usage:
-      "sh!remove --reaction :emoji: --message id --role rolename --channel channelname",
+    usage: "sh!remove -r :emoji: -m id -r name -c id",
     options: `
-	    --reaction (-re) => indica la reaccion y es obligatorio si se usa --message
-		--message (-m) => indica la id del mensaje y es obligatorio si se usa --reaction
-		--role (-r) => indica el rol (se debe indicar el nombre del rol)
-		--channel (-c) => indica el canal (se debe indicar el nombre del canal)
-	`,
-    desc:
-      "Elimina informacion (reacciones, roles, canales) de la base de datos",
+	  --reaction (-re) => Reaccion
+	  --message (-m) => Id del mensaje (obligatorio al usar -re)
+	  --role (-r) => Nombre del rol
+	  --channel (-c) => Id del canal`,
+    desc: "Elimina informacion de la base de datos",
   },
   refresh: {
     level: 0,
-    usage:
-      "sh!refresh --reactions --roles --channels (debe haber al menos uno)",
+    usage: "sh!refresh -re -r -c",
     options: `
-	    --reactions (-re) => refresca reacciones
-		--roles (-r) => refresca roles
-		--channles (-c) => refresca canales
-	  `,
-    desc:
-      "Refresca informacion (obtiene nuevamente la informacion de la base de datos)",
+	  --reactions (-re) => Reacciones
+	  --channles (-c) => Canales
+	  --roles (-r) => Roles`,
+    desc: "Refresca informacion",
   },
   role: {
     level: 0,
-    usage: "sh!role @role --perms mod",
-    options: `
-	    --perms (-p) => indica que permisos darle al rol
+    usage: "sh!role @role -p mod",
+    options: `--perms (-p) => Permisos
 
-		permisos: dev | admin | mod | tech | user
-	  `,
-    desc: "Le da X permisos a un rol",
+	  * Para ver los permisos utiliza "sh!types"`,
+    desc: "Le da permisos a un rol",
   },
   channel: {
     level: 0,
-    usage: "sh!channel #channel | --channel channel-id --skip (opcional)",
+    usage: "sh!channel #channel -s",
     options: `
-	    --skip (-s) => evitar que se tomen acciones de moderacion en el canal
-		--no-skip => toma acciones de moderacion en el canal
-		--channel (-c) => al no poder taguear el canal se indica la id con este parametro
-		--type (-t) => usar este como el canal de logs
-	  `,
-    desc:
-      "Agrega canales a la base de datos e indica si se debe moderar o no en estos",
+	  --skip (-s) => No tomar acciones de moderacion
+	  --no-skip => Tomar acciones de moderacion
+	  --channel (-c) => Al no poder taguear el canal se indica la id con este parametro
+	  --type (-t) => Tipo de canal
+
+	  * Para ver los tipos utiliza "sh!types"`,
+    desc: "Agrega canales a la base de datos",
   },
   addcolor: {
     level: 0,
-    usage: "sh!addcolor @color --level X",
-    options: "--level => indica el nivel necesario para tener el color",
-    desc: "Agrega un color obtenible al llegar a X nivel",
+    usage: "sh!addcolor @color -l nivel",
+    options: "--level (-l) => Nivel para desbloquear el color",
+    desc: "Agrega un color obtenible al llegar al nivel especificado",
+  },
+  types: {
+    level: 0,
+    usage: "sh!types",
+    options: `
+	  --channel (-c) => Mostrar solo tipos de canal
+	  --role (-r) => Mostrar solo tipos de rol
+
+	  * Si se usan ambos o no se usa ninguno se enviaran todos los tipos
+		`,
+    desc: "Muestra los tipos de canales y roles",
   },
   ban: {
     level: 1,
@@ -85,6 +85,12 @@ export const cmdsHelp = {
     usage: "sh!blacklist @user razon",
     options: undefined,
     desc: "Blacklistea o desblacklistea a un usuario",
+  },
+  answer: {
+    level: 1,
+    usage: "sh!answer user-id respuesta",
+    options: undefined,
+    desc: "Responde a la sugerencia de un usuario",
   },
   warn: {
     level: 2,
@@ -151,5 +157,11 @@ export const cmdsHelp = {
     usage: "sh!inv",
     options: undefined,
     desc: "Muestra los colores que has desbloqueado",
+  },
+  sug: {
+    level: 4,
+    usage: "sh!sug sugerencia",
+    options: undefined,
+    desc: "Envia una sugerencia",
   },
 };
