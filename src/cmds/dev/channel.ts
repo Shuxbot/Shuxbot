@@ -44,6 +44,7 @@ exports.run = async (msg: Message, args: string[]) => {
 			   - autor: ${msg.author} - id: ${msg.author.id}
 			   - skip: ${skip}
 			   - type: ${type}`);
+      msg.reply("Se ha agregado el canal.");
     })
     .catch((error) => {
       msg.reply("oops! ha ocurrido un error");
