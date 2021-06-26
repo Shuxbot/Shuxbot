@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, PartialMessage } from "discord.js";
 
 // Source imports
 import {
@@ -11,17 +11,28 @@ import {
 import { Leveling } from "../classes/Leveling";
 import { messageMod } from "../automod/messageMod";
 import { EasterEggs } from "../classes/EasterEggs";
-import { warningMessages } from "../config/config";
+import { log, warningMessages } from "../config/config";
 
 const prefixReg: RegExp = /(s(h|hux|hx|x)\!)/;
 
 /**
  * Handles messages
  * @param {Message} msg - The message to be handled
+ * @param {boolean} deleted - Whether the message has been deleted or not
+ * @param {boolean} edited - Whether the message has been edited or not
  * @returns {void} Nothing
  */
 
-export const messageHandler = (msg: Message): void => {
+export const messageHandler = (
+  msg: Message | PartialMessage,
+  deleted: boolean = false,
+  edited: boolean = false
+): void => {
+  if (deleted) handleDeleted(msg);
+  if (edited) handleEdited(msg);
+
+  if (msg.partial) return;
+
   if (msg.author.bot || msg.channel.type !== "text") return;
   messageMod(msg);
   new EasterEggs(msg);
@@ -80,4 +91,48 @@ const runCommand = (
       runCommand(msg, args, args2, cmd, pLevel + 1);
     }
   }
+};
+
+/**
+ * Handles deleted messages
+ * @param {Message | PartialMessage} msg - The message object
+ * @returns {void} Nothing
+ * */
+
+const handleDeleted = (msg: Message | PartialMessage): void => {
+  if (!msg.author) return;
+  if (msg.author.bot) return;
+
+  log.info(
+    `Un mensaje ha sido **eliminado**.
+	  - User: ${msg.author} **|** ${msg.author.username} **|** ${msg.author.id}
+	  - MsgId: ${msg.id}
+	  - Ch: ${msg.channel} **|** ${msg.channel.id}`
+  );
+
+  if (!msg.content) return;
+  log.info("**Mensaje**:");
+  log.info(msg.content);
+};
+
+/**
+ * Handles edited messages
+ * @param {Message | PartialMessage} msg - The message object
+ * @returns {void} Nothing
+ * */
+
+const handleEdited = (msg: Message | PartialMessage): void => {
+  if (!msg.author) return;
+  if (msg.author.bot) return;
+
+  log.info(
+    `Un mensaje ha sido **editado**.
+	  - User: ${msg.author} **|** ${msg.author.username} **|** ${msg.author.id}
+	  - MsgId: ${msg.id}
+	  - Ch: ${msg.channel} **|** ${msg.channel.id}
+	  - link: ${msg.url}`
+  );
+
+  log.info("**Mensaje original:**");
+  log.info(msg.edits[0].content);
 };

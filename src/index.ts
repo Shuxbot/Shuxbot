@@ -14,6 +14,10 @@ shux.on("ready", () => {
 
 shux.on("message", messageHandler);
 
+shux.on("messageDelete", (msg) => messageHandler(msg, true));
+
+shux.on("messageUpdate", (msg) => messageHandler(msg, false, true));
+
 shux.on("messageReactionAdd", reactionHandler);
 
 shux.login(process.env.TOKEN);
