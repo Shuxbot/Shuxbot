@@ -103,6 +103,9 @@ const handleDeleted = (msg: Message | PartialMessage): void => {
   if (!msg.author) return;
   if (msg.author.bot) return;
 
+  let pLevel = getPrivilegeLevel(msg.member!);
+  if (pLevel < 3) return;
+
   log.info(
     `Un mensaje ha sido **eliminado**.
 	  - User: ${msg.author} **|** ${msg.author.username} **|** ${msg.author.id}
@@ -124,6 +127,9 @@ const handleDeleted = (msg: Message | PartialMessage): void => {
 const handleEdited = (msg: Message | PartialMessage): void => {
   if (!msg.author) return;
   if (msg.author.bot) return;
+
+  let pLevel = getPrivilegeLevel(msg.member!);
+  if (pLevel < 3) return;
 
   log.info(
     `Un mensaje ha sido **editado**.
