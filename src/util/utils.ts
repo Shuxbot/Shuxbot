@@ -20,6 +20,8 @@ export const emojiReg = new RegExp(
   "g"
 );
 
+export const svEmojiReg = new RegExp(/(<.{0,}?[:](.+?)[:]([0-9]+)>)/, "g");
+
 /**
  * Sends a warning messages
  * @async
@@ -79,16 +81,23 @@ export const getFromDB = async (ref: string): Promise<any> => {
 
 export const emojiCounter = (str: string): [number, string[]] => {
   let matches,
+    matches2,
     emojis: string[] = [],
     emojiCount = 0;
 
   do {
     matches = emojiReg.exec(str);
+    matches2 = svEmojiReg.exec(str);
+
     if (matches) {
       emojis.push(matches[0]);
       emojiCount++;
     }
-  } while (matches);
+    if (matches2) {
+      emojis.push(matches2[0]);
+      emojiCount++;
+    }
+  } while (matches || matches2);
 
   return [emojiCount, emojis];
 };
