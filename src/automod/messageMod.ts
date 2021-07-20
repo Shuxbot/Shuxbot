@@ -9,7 +9,8 @@ import {
   sendWarningMessage,
 } from "../util/utils";
 import { ShuxUser } from "../classes/ShuxUser";
-import { warningMessages } from "../config/config";
+import { log, warningMessages } from "../config/config";
+import { shux } from "..";
 
 let user: ShuxUser;
 
@@ -36,13 +37,46 @@ export const messageMod = (msg: Message): void => {
 const floodMap: Map<string, number> = new Map();
 
 /**
- * Warns if there's someone flooding with so much messages
+ * Warns if there's someone flooding with so much messages or walltexts
  * @param {Message} msg - The message object
  * @returns {void} Nothing
  */
 
 const floodMod = (msg: Message): void => {
   let uid = msg.author.id;
+
+  let isNewMember =
+    Date.now() - msg.member!.joinedTimestamp! < 1000 * 60 * 60 * 24 * 3
+      ? true
+      : false;
+
+  let isWalltext = isNewMember
+    ? msg.content.length >= 1000
+    : msg.content.length >= 1500;
+
+  if (isNewMember && isWalltext) {
+    msg
+      .member!.ban({
+        reason: "flood con walltext, usuario nuevo en el servidor",
+      })
+      .then((m) => {
+        log.warn(`Usuario **${m.user.username}** - ${m} ha sido **BANEADO**
+			- Razon: Flood con walltext, usuario nuevo en el servidor
+			- Autor: ${shux.user!.username} - AUTOMOD`);
+      })
+      .catch((err) => log.error(err.message));
+    return;
+  }
+
+  if (!isNewMember && isWalltext) {
+    user.warn("flood con walltext");
+    msg.reply("ha sido warneado por hacer Flood con Walltext");
+  }
+
+  if (msg.mentions.roles.size >= 3 || msg.mentions.users.size >= 5) {
+    user.warn("Massive Mention");
+    msg.reply("NO menciones de forma masiva. +1 warn");
+  }
 
   if (!floodMap.has(uid)) {
     floodMap.set(uid, 1);
@@ -52,10 +86,10 @@ const floodMod = (msg: Message): void => {
   }
   floodMap.set(uid, floodMap.get(uid)! + 1);
 
-  if (floodMap.get(uid)! === 5) {
+  if (floodMap.get(uid)! === 4) {
     sendWarningMessage(msg, warningMessages.flood);
-  } else if (floodMap.get(uid)! >= 7) {
-    user.warn("Flood");
+  } else if (floodMap.get(uid)! >= 6) {
+    user.warn("Flood, 5 o mas mensajes en menos de 4 segundos");
     msg.reply("prohibido el flood. +1 warn");
   }
 };
