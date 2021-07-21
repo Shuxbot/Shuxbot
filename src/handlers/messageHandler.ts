@@ -28,8 +28,14 @@ export const messageHandler = (
   deleted: boolean = false,
   edited: boolean = false
 ): void => {
-  if (deleted) handleDeleted(msg);
-  if (edited) handleEdited(msg);
+  if (deleted) {
+    handleDeleted(msg);
+    return;
+  }
+  if (edited) {
+    handleEdited(msg);
+    return;
+  }
 
   if (msg.partial) return;
 
