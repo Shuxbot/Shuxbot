@@ -17,9 +17,9 @@ exports.run = async (msg: Message, args: string[]) => {
 
   if (!level) return msg.reply("el nivel debe ser un numero!");
 
-  db.ref(`server/roles/${role.name.toLocaleLowerCase().replace(/\s/g, "")}`)
+  db.ref(`server/roles/${role.id}`)
     .set({
-      id: role.id,
+      name: role.name,
       perms: "color",
       level: level,
     })

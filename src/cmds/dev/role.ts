@@ -35,9 +35,9 @@ exports.run = async (msg: Message, args: string[]) => {
   if (!privilegeLevel[newPrivilege])
     return msg.reply("debes especificar bien los permisos\n" + help.usage);
 
-  db.ref(`server/roles/${role.name.toLocaleLowerCase().replace(/\s/g, "")}`)
+  db.ref(`server/roles/${role.id}`)
     .set({
-      id: role.id,
+      name: role.name,
       perms: privilegeLevel[newPrivilege],
     })
     .then(async () => {

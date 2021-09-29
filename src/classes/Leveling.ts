@@ -8,9 +8,9 @@ import {
 
 // Source imports
 import { ShuxUser } from "./ShuxUser";
-import { log } from "../config/config";
 import { db } from "../config/database";
 import { colors } from "../config/config";
+import { filesRole, log } from "../config/config";
 import {
   channelType,
   getActualPoints,
@@ -37,10 +37,18 @@ export class Leveling {
           let level = Math.floor(getLevelByPoints(points));
           let newLevel = Math.floor(getLevelByPoints(newPoints));
 
+          let hasFilesRole = sUser.member!.roles.cache.has(filesRole);
+
+          if (!hasFilesRole && newLevel >= filesRole.level) {
+            sUser.member!.roles.add(filesRole.id);
+          }
+
           if (newLevel > level) {
             for (let color in colors) {
               if (colors[color].level == newLevel) {
-                msg.reply(`Ha desbloqueado un nuevo color! (${color})`);
+                msg.reply(
+                  `Ha desbloqueado un nuevo color! (${colors[color].name})`
+                );
               }
             }
 

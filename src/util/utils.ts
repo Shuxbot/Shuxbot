@@ -176,7 +176,7 @@ export const getPrivilegeLevel = (member: GuildMember): number => {
   if (member.hasPermission("ADMINISTRATOR")) return 0;
 
   for (const r in roles) {
-    if (member!.roles.cache.has(roles[r].id)) {
+    if (member!.roles.cache.has(r)) {
       if (Number(privilegeLevel[roles[r].perms]) < pLevel)
         pLevel = Number(privilegeLevel[roles[r].perms]);
     }

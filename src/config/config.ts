@@ -17,9 +17,15 @@ export let channels: any;
 
 /**
  * Roles object
- * { rolename: { id: string, perms: string } }
+ * { id: { name: string, perms: string } }
  */
 export let roles: any;
+
+/**
+ * Files Role object
+ * id: { name: string, perms: string, level: number }
+ */
+export let filesRole: any;
 
 /**
  * Reactions object
@@ -50,7 +56,7 @@ export const refreshData = async (data: data): Promise<void> => {
     let logsChannel = getChannel(undefined, channelType.logs);
     if (logsChannel && !log.isLoggeable) log.isLoggeable = true;
   } else if (data == "reactions") reactions = refreshedData;
-  else [roles, colors] = sortRoles(refreshedData);
+  else [filesRole, roles, colors] = sortRoles(refreshedData);
 
   log.warn(`Se ha actualizado la referencia: server/${data}`);
 };
@@ -61,11 +67,17 @@ export const refreshData = async (data: data): Promise<void> => {
  * @returns {[any, any]} - Array with roles and colors [roles, colors]
  */
 
-export const sortRoles = (rolesObject: any): [any, any] => {
+export const sortRoles = (rolesObject: any): [any, any, any] => {
+  let filesRole: any = {};
   let roles: any = {};
   let colors: any = {};
 
   for (let role in rolesObject) {
+    if (rolesObject[role].perms == "files") {
+      filesRole = rolesObject[role];
+      filesRole["id"] = role;
+    }
+
     if (rolesObject[role].perms == "color") {
       colors[role] = rolesObject[role];
     } else {
@@ -73,7 +85,7 @@ export const sortRoles = (rolesObject: any): [any, any] => {
     }
   }
 
-  return [roles, colors];
+  return [filesRole, roles, colors];
 };
 
 /**
@@ -104,8 +116,8 @@ export const initialize = async (): Promise<void> => {
   for (let r in roles) {
     initLog += `
 	  Nivel: ${roles[r].perms}
-	    - <@&${roles[r].id}>
-		- id: ${roles[r].id}`;
+	    - <@&${r}>
+		- id: ${r}`;
   }
 
   // Reactions
