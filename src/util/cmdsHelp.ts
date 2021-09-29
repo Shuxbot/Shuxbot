@@ -104,6 +104,12 @@ export const cmdsHelp = {
     options: undefined,
     desc: "Mutea a un usuario de un canal",
   },
+  kick: {
+    level: 2,
+    usage: "sh!kick @user reason",
+    options: undefined,
+    desc: "Kickea a un usuario del servidor",
+  },
   whois: {
     level: 2,
     usage: "sh!whois @user",
