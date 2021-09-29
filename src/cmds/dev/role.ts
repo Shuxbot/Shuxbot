@@ -35,9 +35,14 @@ exports.run = async (msg: Message, args: string[]) => {
   if (!privilegeLevel[newPrivilege])
     return msg.reply("debes especificar bien los permisos\n" + help.usage);
 
+  let nameSplit = role.name.toLocaleLowerCase().trim().split("");
+  nameSplit = nameSplit.filter((arg) => /\S/.test(arg));
+
+  let name = nameSplit.join("");
+
   db.ref(`server/roles/${role.id}`)
     .set({
-      name: role.name,
+      name: name,
       perms: privilegeLevel[newPrivilege],
     })
     .then(async () => {

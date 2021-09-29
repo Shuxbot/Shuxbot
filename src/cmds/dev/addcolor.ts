@@ -17,9 +17,14 @@ exports.run = async (msg: Message, args: string[]) => {
 
   if (!level) return msg.reply("el nivel debe ser un numero!");
 
+  let nameSplit = role.name.toLocaleLowerCase().trim().split(" ");
+  nameSplit = nameSplit.filter((arg) => /\S/.test(arg));
+
+  let name = nameSplit.join("");
+
   db.ref(`server/roles/${role.id}`)
     .set({
-      name: role.name,
+      name: name,
       perms: "color",
       level: level,
     })
