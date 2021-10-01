@@ -1,7 +1,10 @@
 import { Message } from "discord.js";
+import { log } from "../config/config";
+import { db } from "../config/database";
 
 // Source imports
-import { probability } from "../util/utils";
+import { getLevelByPoints, getPointsByLevel, probability } from "../util/utils";
+import { ShuxUser } from "./ShuxUser";
 
 /** Easter eggs Class */
 export class EasterEggs {
@@ -22,11 +25,14 @@ export class EasterEggs {
   ];
 
   constructor(private msg: Message) {
-    if (
-      msg.content.toLowerCase() === "feliz jueves" &&
-      new Date().getDay() == 4
-    )
+    let content = msg.content.toLowerCase();
+
+    if (content === "feliz jueves" && new Date().getDay() == 4)
       this.happyThursday();
+
+    if (content === "beigod" || content === "beido waifu") this.beigod();
+    if (content === "beidou best waifu" || content === "beigod best waifu")
+      this.beigod(true);
   }
 
   /**
@@ -44,6 +50,61 @@ export class EasterEggs {
     } else if (probability(0.01)) {
       let img = Math.floor(Math.random() * this.rei.length);
       this.msg.channel.send(this.rei[img]);
+    }
+  }
+
+  /* String array with gifs and messages */
+  private beidou = [
+    "Beidou god.",
+    "https://tenor.com/view/genshin-impact-beidou-gif-22152043",
+    "https://tenor.com/view/beidou-genshin-impact-lol-meme-gif-20601800",
+    "https://tenor.com/view/beidou-genshin-genshin-impact-electro-gif-22199160",
+    "https://tenor.com/view/mihoyo-genshin-genshinimpact-beidou-hot-gif-22072978",
+    "Si.",
+  ];
+
+  /**
+   * Sends messages, gifs and gives levels
+   * 1% prob to get a message and 10 levels
+   * 5% prob to get a gif
+   */
+
+  private beigod(cultured = false): void {
+    let phrases = [
+      "Por fin, alguien cuto",
+      "Veo que entiendes lo que es bueno",
+      "Vaya, una persona sabia",
+      "Ojito, le sabe le sabe",
+    ];
+    let comp = [
+      ", ten un regalo",
+      ", ahi va un regalo",
+      ", ten esto",
+      ", ten, te doy esto",
+    ];
+
+    if (probability(0.01) && cultured) {
+      let sUser = new ShuxUser(this.msg.author);
+      sUser.get().then((uData) => {
+        let points = Number(uData.points);
+        let level = getLevelByPoints(points);
+
+        let newLevel = Math.round(level) + 10;
+        let newPoints = getPointsByLevel(newLevel);
+
+        db.ref(sUser.ref)
+          .update({ points: newPoints })
+          .then(() => {
+            let msg = phrases[Math.floor(Math.random() * phrases.length)];
+            msg += comp[Math.floor(Math.random() * comp.length)];
+            this.msg.reply(msg + ": **+10 niveles**");
+          })
+          .catch((err) => log.error(err.message));
+      });
+    }
+    if (probability(0.25) && !cultured) {
+      let msg = this.beidou[Math.floor(Math.random() * this.beidou.length)];
+      this.msg.channel.send(msg);
     }
   }
 }
