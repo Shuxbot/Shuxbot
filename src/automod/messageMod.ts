@@ -57,11 +57,11 @@ const floodMod = (msg: Message): void => {
   if (isNewMember && isWalltext) {
     msg
       .member!.ban({
-        reason: "flood con walltext, usuario nuevo en el servidor",
+        reason: "Walltext, usuario nuevo en el servidor",
       })
       .then((m) => {
-        log.warn(`Usuario **${m.user.username}** - ${m} ha sido **BANEADO**
-			- Razon: Flood con walltext, usuario nuevo en el servidor
+        log.warn(`**${m.user.username}** - ${m} ha sido **BANEADO**
+			- Razon: Walltext, usuario nuevo en el servidor
 			- Autor: ${shux.user!.username} - AUTOMOD`);
       })
       .catch((err) => log.error(err.message));
@@ -69,8 +69,8 @@ const floodMod = (msg: Message): void => {
   }
 
   if (!isNewMember && isWalltext) {
-    user.warn("flood con walltext");
-    msg.reply("ha sido warneado por hacer Flood con Walltext");
+    user.warn("Walltext");
+    msg.reply("ha sido warneado por enviar Walltext");
   }
 
   if (msg.mentions.roles.size >= 3 || msg.mentions.users.size >= 5) {
@@ -89,7 +89,7 @@ const floodMod = (msg: Message): void => {
   if (floodMap.get(uid)! === 4) {
     sendWarningMessage(msg, warningMessages.flood);
   } else if (floodMap.get(uid)! >= 6) {
-    user.warn("Flood, 5 o mas mensajes en menos de 4 segundos");
+    user.warn(`Flood, ${floodMap.get(uid)} mensajes en menos de 4 segundos`);
     msg.reply("prohibido el flood. +1 warn");
   }
 };
