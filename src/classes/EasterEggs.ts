@@ -32,13 +32,13 @@ export class EasterEggs {
   /**
    * Sends an Asuka Langley gif!
    *
-   * 3% prob to get an Asuka Langley gif
-   * 0.1% prob to get a Rei Chikita gif
+   * 20% prob to get an Asuka Langley gif
+   * 1% prob to get a Rei Chikita gif
    * @returns {void} Nothing
    */
 
   private happyThursday(): void {
-    if (probability(0.3)) {
+    if (probability(0.2)) {
       let gif = Math.floor(Math.random() * this.asuka.length);
       this.msg.channel.send(this.asuka[gif]);
     } else if (probability(0.01)) {
