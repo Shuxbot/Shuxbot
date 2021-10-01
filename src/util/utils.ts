@@ -1,5 +1,4 @@
 import { Guild, GuildMember, Message } from "discord.js";
-
 // Source imports
 import { shux } from "..";
 import { db } from "../config/database";
@@ -229,6 +228,16 @@ export const remove = async (ref: string): Promise<string> => {
 
 export const getLevelByPoints = (points: number): number => {
   return 2 * Math.sqrt(points);
+};
+
+/**
+ * Gets user points based on level
+ * @param {number} level - The user level
+ * @returns {number} The user points
+ */
+
+export const getPointsByLevel = (lvl: number): number => {
+  return lvl ** 2 / 4;
 };
 
 /**
