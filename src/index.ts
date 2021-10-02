@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 
 // Source imports
-import { initialize } from "./config/config";
+import { initialize, shuxPresenceData } from "./config/config";
 import { messageHandler } from "./handlers/messageHandler";
 import { reactionHandler } from "./handlers/reactionHandler";
 
@@ -10,6 +10,13 @@ export const shux = new Client({ partials: ["MESSAGE", "REACTION", "USER"] });
 shux.on("ready", () => {
   console.log(`Ready as ${shux.user!.username}`);
   initialize();
+
+  let i = 0;
+  shux.setInterval(() => {
+    if (i == shuxPresenceData.length) i = 0;
+    shux.user!.setPresence(shuxPresenceData[i]);
+    i++;
+  }, 1000 * 60 * 30);
 });
 
 shux.on("message", messageHandler);

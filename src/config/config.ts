@@ -1,5 +1,6 @@
 // Source imports
 import { Log } from "../classes/Log";
+import { ActivityOptions, PresenceStatusData } from "discord.js";
 import { channelType, getChannel, getFromDB } from "../util/utils";
 
 /**
@@ -173,3 +174,54 @@ export const ticketMessage = ` **Su ticket ha sido abierto.**
   Por favor espere a que un técnico este libre!
 
   Si el ticket no cumple con estos requisitos será cerrado en las próximas 12 horas.`;
+
+export const shuxPresenceData: Array<{
+  status: PresenceStatusData;
+  activity: ActivityOptions;
+}> = [
+  {
+    status: "idle",
+    activity: {
+      name: "Actividad de usuarios.",
+      type: "WATCHING",
+    },
+  },
+  { status: "online", activity: { name: "Feedback", type: "LISTENING" } },
+  {
+    status: "online",
+    activity: { name: "Shux vs Trolls (aka pelotudos)", type: "COMPETING" },
+  },
+  {
+    status: "idle",
+    activity: { name: "ShuxBot Source code", type: "PLAYING" },
+  },
+  {
+    status: "online",
+    activity: {
+      name: "Ven al canal de Fair Warning!",
+      url: "https://www.twitch.tv/fairwarning17 ",
+      type: "STREAMING",
+    },
+  },
+  {
+    status: "online",
+    activity: {
+      name: "Tienes problemas? Abre un ticket!",
+      type: "LISTENING",
+    },
+  },
+  {
+    status: "dnd",
+    activity: {
+      name: "Usa sx!help para recibir ayuda sobre comandos!",
+      type: "STREAMING",
+    },
+  },
+  {
+    status: "dnd",
+    activity: {
+      name: "La administracion! No molestar.",
+      type: "COMPETING",
+    },
+  },
+];
