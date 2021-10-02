@@ -13,7 +13,7 @@ import { messageMod } from "../automod/messageMod";
 import { EasterEggs } from "../classes/EasterEggs";
 import { log, warningMessages } from "../config/config";
 
-const prefixReg: RegExp = /(s(h|hux|hx|x)\!)/;
+export const prefixReg: RegExp = /(s(h|hux|hx|x)\!)/;
 
 /**
  * Handles messages

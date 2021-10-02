@@ -1,10 +1,14 @@
 import { Message } from "discord.js";
 
 // Source imports
+import { prefixReg } from "../../handlers/messageHandler";
 import { SuggestionManager } from "../../classes/SuggestionManager";
 
 exports.run = (msg: Message) => {
-  let answer = msg.content.replace(/(s(h|hux|hx|x)\!\w+\s)/, "");
+  let prefix = msg.content.toLocaleLowerCase().match(prefixReg);
+  let cmdLength = prefix![0].length + 6;
+
+  let answer = msg.content.substr(cmdLength);
   let matches = answer.match(/[0-9]+/);
 
   if (!matches)
@@ -17,5 +21,6 @@ exports.run = (msg: Message) => {
 
   let error = SuggestionManager.answer(uid, answer);
   if (error) return msg.channel.send(error);
+
   msg.reply("respuesta enviada.");
 };
