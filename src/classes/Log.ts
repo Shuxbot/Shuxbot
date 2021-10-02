@@ -1,8 +1,8 @@
 import { MessageEmbed, TextChannel } from "discord.js";
 
 // Source imports
-import { channelType, getChannel, getGuild } from "../util/utils";
 import { shuxSvId } from "../config/config";
+import { channelType, getChannel, getGuild } from "../util/utils";
 
 /** Logger class */
 export class Log {

@@ -128,7 +128,8 @@ const emojiFloodMod = (msg: Message): void => {
   }
 };
 
-let inviteRegex: RegExp = /(http(s)?:\/\/(www.)?)?(discord.gg|discord.me|discord.link|discord.io|invite.gg|invite.ink)\/\w+/;
+let inviteRegex: RegExp =
+  /(http(s)?:\/\/(www.)?)?(discord.gg|discord.me|discord.link|discord.io|invite.gg|invite.ink)\/\w+/;
 
 /**
  * Warns if message has a Discord invite link

@@ -9,8 +9,7 @@ export const cmdsHelp = {
 		--no-remove => No quitar el rol al reaccionar denuevo
 		--ticket (-t) => Abrira un ticket si el usuario que reaccione tiene el rol especificado
 		--no-ticket => No abrira tickets al reaccionar, se tenga o no el rol especificado`,
-    desc:
-      "Agrega una reaccion a un mensaje para dar el rol especificado a quien reaccione o para abrir tickets si el que reacciona tiene el rol especificado",
+    desc: "Agrega una reaccion a un mensaje para dar el rol especificado a quien reaccione o para abrir tickets si el que reacciona tiene el rol especificado",
   },
   remove: {
     level: 0,

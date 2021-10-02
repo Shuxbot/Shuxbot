@@ -3,8 +3,8 @@ import { log } from "../config/config";
 import { db } from "../config/database";
 
 // Source imports
-import { getLevelByPoints, getPointsByLevel, probability } from "../util/utils";
 import { ShuxUser } from "./ShuxUser";
+import { getLevelByPoints, getPointsByLevel, probability } from "../util/utils";
 
 /** Easter eggs Class */
 export class EasterEggs {

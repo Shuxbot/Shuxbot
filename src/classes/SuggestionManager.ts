@@ -1,8 +1,8 @@
 import { Message, MessageEmbed, TextChannel, User } from "discord.js";
 
 // Source imports
-import { channelType, getChannel, getGuild } from "../util/utils";
 import { log, shuxSvId } from "../config/config";
+import { channelType, getChannel, getGuild } from "../util/utils";
 
 /* Suggestion Manager class */
 export class SuggestionManager {

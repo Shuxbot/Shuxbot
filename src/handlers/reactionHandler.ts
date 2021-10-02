@@ -1,8 +1,8 @@
 import { MessageReaction, PartialUser, User } from "discord.js";
 
 // Source imports
-import { TicketManager } from "../classes/TicketManager";
 import { reactions } from "../config/config";
+import { TicketManager } from "../classes/TicketManager";
 
 /**
  * Handles reactions

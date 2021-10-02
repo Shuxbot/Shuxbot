@@ -3,7 +3,7 @@ import { GuildChannel, User } from "discord.js";
 // Source imports
 import { ShuxUser } from "./ShuxUser";
 import { log, ticketMessage } from "../config/config";
-import {channelType, getChannel} from "../util/utils";
+import { channelType, getChannel } from "../util/utils";
 
 /** Ticket Manager Class */
 export class TicketManager {
@@ -60,7 +60,7 @@ export class TicketManager {
 
   private create(): void {
     let guild = this.shuxUser.guild;
-	let ticketsCategory = getChannel(undefined, channelType.tickets)
+    let ticketsCategory = getChannel(undefined, channelType.tickets);
 
     if (!ticketsCategory)
       return log.error("No hay una categoria para tickets especificada");
