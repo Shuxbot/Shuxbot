@@ -71,7 +71,7 @@ export class EasterEggs {
 
   private beigod(cultured = false): void {
     let phrases = [
-      "Por fin, alguien cuto",
+      "Por fin, alguien culto",
       "Veo que entiendes lo que es bueno",
       "Vaya, una persona sabia",
       "Ojito, le sabe le sabe",
