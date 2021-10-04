@@ -36,9 +36,10 @@ export const sendWarningMessage = async (
   let warnMsgIndex = Math.floor(Math.random() * warningMsgs.length);
 
   let warningMsg = await msg.channel.send(warningMsgs[warnMsgIndex]);
-  warningMsg
-    .delete({ timeout: 10000 })
-    .catch((error) => log.error(error.message));
+  setTimeout(
+    () => warningMsg.delete().catch((error) => log.error(error.message)),
+    10000
+  );
 };
 
 /**
@@ -172,7 +173,7 @@ export const getValue = (arr: string[], option: string): string | undefined => {
 export const getPrivilegeLevel = (member: GuildMember): number => {
   let pLevel = 4;
 
-  if (member.hasPermission("ADMINISTRATOR")) return 0;
+  if (member.permissions.has("ADMINISTRATOR")) return 0;
 
   for (const r in roles) {
     if (member!.roles.cache.has(r)) {
