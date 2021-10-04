@@ -1,4 +1,9 @@
-import { MessageReaction, PartialUser, User } from "discord.js";
+import {
+  MessageReaction,
+  PartialMessageReaction,
+  PartialUser,
+  User,
+} from "discord.js";
 
 // Source imports
 import { reactions } from "../config/config";
@@ -13,9 +18,11 @@ import { TicketManager } from "../classes/TicketManager";
  */
 
 export const reactionHandler = async (
-  reaction: MessageReaction,
+  reaction: MessageReaction | PartialMessageReaction,
   user: User | PartialUser
 ): Promise<void> => {
+  if (reaction.partial) reaction.fetch();
+
   let member = await reaction.message.guild!.members.fetch(user.id);
   user = member.user;
 
@@ -24,7 +31,7 @@ export const reactionHandler = async (
   let msgId = reactions[reaction.message.id];
 
   if (msgId) {
-    let reactionEmoji = msgId[reaction.emoji.name];
+    let reactionEmoji = msgId[reaction.emoji.name!];
 
     if (reactionEmoji) {
       let hasRole = member.roles.cache.has(reactionEmoji.role);
