@@ -26,20 +26,13 @@ export const prefixReg: RegExp = /(s(h|hux|hx|x)\!)/;
 export const messageHandler = (
   msg: Message | PartialMessage,
   deleted: boolean = false,
-  edited: boolean = false
 ): void => {
   if (deleted) {
     handleDeleted(msg);
     return;
   }
-  if (edited) {
-    handleEdited(msg);
-    return;
-  }
 
-  if (msg.partial) return;
-
-  if (msg.author.bot || msg.channel.type !== "text") return;
+  if (msg.partial || msg.author.bot) return;
   messageMod(msg);
   new EasterEggs(msg);
   new Leveling(msg);
@@ -122,29 +115,4 @@ const handleDeleted = (msg: Message | PartialMessage): void => {
   if (!msg.content) return;
   log.info("**Mensaje**:");
   log.info(msg.content);
-};
-
-/**
- * Handles edited messages
- * @param {Message | PartialMessage} msg - The message object
- * @returns {void} Nothing
- * */
-
-const handleEdited = (msg: Message | PartialMessage): void => {
-  if (!msg.author) return;
-  if (msg.author.bot) return;
-
-  let pLevel = getPrivilegeLevel(msg.member!);
-  if (pLevel < 3) return;
-
-  log.info(
-    `Un mensaje ha sido **editado**.
-	  - User: ${msg.author} **|** ${msg.author.username} **|** ${msg.author.id}
-	  - MsgId: ${msg.id}
-	  - Ch: ${msg.channel} **|** ${msg.channel.id}
-	  - link: ${msg.url}`
-  );
-
-  log.info("**Mensaje original:**");
-  log.info(msg.edits[0].content);
 };
