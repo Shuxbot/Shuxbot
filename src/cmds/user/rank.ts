@@ -23,5 +23,5 @@ exports.run = async (msg: Message) => {
     .setColor("RANDOM")
     .setTimestamp();
 
-  msg.channel.send(embed);
+  msg.channel.send({ embeds: [embed] });
 };

@@ -35,5 +35,5 @@ exports.run = async (msg: Message) => {
     .setThumbnail(member.user.displayAvatarURL())
     .setTimestamp();
 
-  msg.channel.send(profileEmbed);
+  msg.channel.send({ embeds: [profileEmbed] });
 };

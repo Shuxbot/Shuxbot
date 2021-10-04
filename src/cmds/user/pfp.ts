@@ -19,5 +19,5 @@ exports.run = async (msg: Message) => {
     .setFooter(msg.author.username, msg.author.displayAvatarURL())
     .setTimestamp();
 
-  msg.channel.send(embed);
+  msg.channel.send({ embeds: [embed] });
 };

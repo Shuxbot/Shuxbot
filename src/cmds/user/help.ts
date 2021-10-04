@@ -25,7 +25,7 @@ exports.run = async (msg: Message, args: string[]) => {
       .setColor("GREEN")
       .setTimestamp();
 
-    msg.channel.send(embed);
+    msg.channel.send({ embeds: [embed] });
   } else {
     let embed = new MessageEmbed()
       .setTitle("Ayuda General")
@@ -38,7 +38,7 @@ exports.run = async (msg: Message, args: string[]) => {
       }
     }
 
-    msg.channel.send(embed);
+    msg.channel.send({ embeds: [embed] });
   }
 };
 

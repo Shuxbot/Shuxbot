@@ -26,5 +26,5 @@ exports.run = async (msg: Message) => {
   }
 
   if (count == 0) return msg.reply("Oops! no tiene colores!");
-  msg.channel.send(invEmbed);
+  msg.channel.send({ embeds: [invEmbed] });
 };
