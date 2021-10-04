@@ -9,12 +9,13 @@ import {
 // Source imports
 import { ShuxUser } from "./ShuxUser";
 import { db } from "../config/database";
-import { colors } from "../config/config";
+import { colors, shuxSvId } from "../config/config";
 import { filesRole, log } from "../config/config";
 import {
   channelType,
   getActualPoints,
   getChannel,
+  getGuild,
   getLevelByPoints,
 } from "../util/utils";
 
@@ -56,12 +57,10 @@ export class Leveling {
             let replyChannel: any = msg.channel;
             let cmdsChannel = getChannel(undefined, channelType.cmds);
 
-            if (cmdsChannel) {
-              if (msg.guild!.channels.cache.has(cmdsChannel.id)) {
-                replyChannel = new TextChannel(msg.guild!, {
-                  id: cmdsChannel.id,
-                });
-              }
+            if (cmdsChannel && msg.guild!.channels.cache.has(cmdsChannel.id)) {
+              replyChannel = getGuild(shuxSvId)!.channels.cache.find(
+                (ch) => ch.id === cmdsChannel!.id
+              );
             }
 
             let lvlUpEmbed = this.getLevelEmbed(
@@ -71,10 +70,7 @@ export class Leveling {
             );
 
             replyChannel
-              .send(msg.author.toString())
-              .then(() => {
-                replyChannel.send(lvlUpEmbed);
-              })
+              .send(msg.author.toString(), { embeds: [lvlUpEmbed] })
               .catch((error: any) => {
                 log.error(error.message);
               });

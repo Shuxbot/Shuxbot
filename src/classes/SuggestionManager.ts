@@ -51,8 +51,10 @@ export class SuggestionManager {
       return;
     }
 
-    let textChannel = new TextChannel(sv!, { id: adminCh.id });
-    textChannel.send(suggestionEmbed);
+    let textChannel: any = sv!.channels.cache.find(
+      (ch) => ch.id == adminCh!.id && ch.type == "GUILD_TEXT"
+    );
+    textChannel!.send({ embeds: [suggestionEmbed] });
     msg.reply("se ha recibido su sugerencia, gracias por ayudarnos a mejorar!");
   }
 
@@ -88,11 +90,10 @@ export class SuggestionManager {
       .setFooter(`Respuesta - ${user.username} - ${user.id}`)
       .setTimestamp();
 
-    let textChannel = new TextChannel(sv!, { id: suggestCh.id });
-    textChannel.send(user.toString()).then((message) => {
-      message.channel.send(answerEmbed);
-    });
-
+    let textChannel: any = sv!.channels.cache.find(
+      (ch) => ch.id == suggestCh!.id && ch.type == "GUILD_TEXT"
+    );
+    textChannel.send(user.toString(), { embeds: [answerEmbed] });
     return null;
   }
 }

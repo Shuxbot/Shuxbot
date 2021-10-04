@@ -18,7 +18,10 @@ export class Log {
    */
 
   private log(log: any): void {
+    let isEmbed = false;
+
     if (!this.isLoggeable) return;
+    if (typeof MessageEmbed == typeof log) isEmbed = true;
 
     let logsCh = getChannel(undefined, channelType.logs);
     if (!logsCh) return;
@@ -26,8 +29,10 @@ export class Log {
     let guild = getGuild(shuxSvId);
     if (!guild!.channels.cache.has(logsCh.id)) return;
 
-    let logsChannel = new TextChannel(guild!, { id: logsCh.id });
-    logsChannel.send(log);
+    let logsChannel: any = guild!.channels.cache.find(
+      (ch) => ch.id == logsCh!.id && ch.type == "GUILD_TEXT"
+    );
+    isEmbed ? logsChannel.send({ embeds: [log] }) : logsChannel.send(log);
   }
 
   /**
