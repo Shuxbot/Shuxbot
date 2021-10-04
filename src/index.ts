@@ -5,14 +5,14 @@ import { initialize, shuxPresenceData } from "./config/config";
 import { messageHandler } from "./handlers/messageHandler";
 import { reactionHandler } from "./handlers/reactionHandler";
 
-export const shux = new Client({ partials: ["MESSAGE", "REACTION", "USER"] });
+export const shux = new Client({ intents: [], partials: ["MESSAGE", "REACTION", "USER"] });
 
 shux.on("ready", () => {
   console.log(`Ready as ${shux.user!.username}`);
   initialize();
 
   let i = 0;
-  shux.setInterval(() => {
+  setInterval(() => {
     if (i == shuxPresenceData.length) i = 0;
     shux.user!.setPresence(shuxPresenceData[i]);
     i++;
@@ -22,8 +22,6 @@ shux.on("ready", () => {
 shux.on("message", messageHandler);
 
 shux.on("messageDelete", (msg) => messageHandler(msg, true));
-
-shux.on("messageUpdate", (msg) => messageHandler(msg, false, true));
 
 shux.on("messageReactionAdd", reactionHandler);
 
