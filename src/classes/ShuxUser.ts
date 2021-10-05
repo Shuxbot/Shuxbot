@@ -75,10 +75,6 @@ export class ShuxUser {
    */
 
   public async lockCh(chId: string): Promise<void> {
-    let channel = this.guild!.channels.cache.find((ch) => ch.id === chId);
-
-    if (!channel) return;
-
     let perms = {
       VIEW_CHANNEL: false,
       READ_MESSAGE_HISTORY: false,
@@ -87,7 +83,11 @@ export class ShuxUser {
       CONNECT: false,
     };
 
-    let ch = await channel.updateOverwrite(this.user, perms);
+    let ch = await this.guild!.channels.fetch(chId).then((ch) =>
+      ch!.permissionOverwrites.edit(this.user, perms)
+    );
+    if (!ch) return;
+
     log.info(
       `Se ha **muteado** a ${this.user} - id: ${this.user.id} del canal ${ch} - id: ${ch.id}`
     );
