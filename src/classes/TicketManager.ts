@@ -1,4 +1,4 @@
-import { GuildChannel, User } from "discord.js";
+import { GuildChannel, ThreadChannel, User } from "discord.js";
 
 // Source imports
 import { ShuxUser } from "./ShuxUser";
@@ -11,7 +11,7 @@ export class TicketManager {
   private shuxUser: ShuxUser;
 
   /** The ticket (guildChannel) object */
-  private ticket: GuildChannel | undefined;
+  private ticket: GuildChannel | ThreadChannel | undefined;
 
   constructor(user: User) {
     this.shuxUser = new ShuxUser(user);
@@ -30,7 +30,7 @@ export class TicketManager {
    * @returns {GuildChannel | undefined} The guild channel object
    */
 
-  private search(): GuildChannel | undefined {
+  private search(): GuildChannel | ThreadChannel | undefined {
     let user = this.shuxUser;
 
     let ticket = user.guild!.channels.cache.find(
@@ -66,7 +66,7 @@ export class TicketManager {
       return log.error("No hay una categoria para tickets especificada");
 
     let category = guild!.channels.cache.find(
-      (ch) => ch.type === "category" && ch.id === ticketsCategory!.id
+      (ch) => ch.type === "GUILD_CATEGORY" && ch.id === ticketsCategory!.id
     );
 
     if (!category) {
@@ -79,11 +79,11 @@ export class TicketManager {
 
     guild!.channels
       .create(this.shuxUser.member!.id, {
-        type: "text",
-        parent: category,
+        type: "GUILD_TEXT",
+        parent: category.id,
       })
       .then((ch) => {
-        ch.updateOverwrite(this.shuxUser.member!.user, {
+        ch.permissionOverwrites.edit(this.shuxUser.member!.user, {
           VIEW_CHANNEL: true,
           READ_MESSAGE_HISTORY: true,
           SEND_MESSAGES: true,
