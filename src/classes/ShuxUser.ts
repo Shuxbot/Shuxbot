@@ -8,7 +8,7 @@ import { log, shuxSvId } from "../config/config";
 /** ShuxUser Class */
 export class ShuxUser {
   /** The GuildMember object for this user*/
-  public member: GuildMember | null;
+  public member: GuildMember | undefined;
 
   /** The guild object */
   public readonly guild: Guild | undefined;
@@ -18,7 +18,7 @@ export class ShuxUser {
 
   constructor(private user: User) {
     this.guild = getGuild(shuxSvId);
-    this.member = this.guild!.member(user);
+    this.member = this.guild!.members.cache.find((m) => m.id == user.id);
   }
 
   /**
