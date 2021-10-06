@@ -93,7 +93,8 @@ export class SuggestionManager {
     let textChannel: any = sv!.channels.cache.find(
       (ch) => ch.id == suggestCh!.id && ch.type == "GUILD_TEXT"
     );
-    textChannel.send(user.toString(), { embeds: [answerEmbed] });
+    textChannel.send(user.toString());
+    textChannel.send({ embeds: [answerEmbed] });
     return null;
   }
 }
