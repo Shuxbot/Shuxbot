@@ -284,3 +284,14 @@ export const getChannel = (
   }
   return null;
 };
+
+/**
+ * Manages metadata
+ * @param {any} metadata - Metadata
+ * @param {string} message - The message to be sent
+ * @returns void - nothing
+ */
+
+export const manageMetadata = (metadata: any, message: string): void => {
+  metadata.send(message);
+};
