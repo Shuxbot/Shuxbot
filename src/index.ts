@@ -5,7 +5,19 @@ import { initialize, shuxPresenceData } from "./config/config";
 import { messageHandler } from "./handlers/messageHandler";
 import { reactionHandler } from "./handlers/reactionHandler";
 
-export const shux = new Client({ intents: [], partials: ["MESSAGE", "REACTION", "USER"] });
+export const shux = new Client({
+  intents: [
+    "GUILDS",
+    "GUILD_BANS",
+    "GUILD_MEMBERS",
+    "GUILD_MESSAGES",
+    "GUILD_PRESENCES",
+    "GUILD_VOICE_STATES",
+    "GUILD_MESSAGE_REACTIONS",
+    "GUILD_EMOJIS_AND_STICKERS",
+  ],
+  partials: ["MESSAGE", "REACTION", "USER"],
+});
 
 shux.on("ready", () => {
   console.log(`Ready as ${shux.user!.username}`);
