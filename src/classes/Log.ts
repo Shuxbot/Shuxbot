@@ -1,4 +1,4 @@
-import { MessageEmbed, TextChannel } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 // Source imports
 import { shuxSvId } from "../config/config";
@@ -17,9 +17,7 @@ export class Log {
    * @returns {void} Nothing
    */
 
-  private log(log: any): void {
-    let isEmbed = false;
-
+  private log(log: any, isEmbed: boolean): void {
     if (!this.isLoggeable) return;
     if (typeof MessageEmbed == typeof log) isEmbed = true;
 
@@ -41,8 +39,8 @@ export class Log {
    * @returns {void} Nothing
    */
 
-  public info(msg: string | MessageEmbed): void {
-    this.log(msg);
+  public info(msg: string | MessageEmbed, isEmbed = false): void {
+    this.log(msg, isEmbed);
   }
 
   /**
@@ -58,7 +56,7 @@ export class Log {
       .setDescription(msg)
       .setTimestamp();
 
-    this.log(warnEmbed);
+    this.log(warnEmbed, true);
   }
 
   /**
@@ -74,6 +72,6 @@ export class Log {
       .setDescription(msg)
       .setTimestamp();
 
-    this.log(errorEmbed);
+    this.log(errorEmbed, true);
   }
 }
