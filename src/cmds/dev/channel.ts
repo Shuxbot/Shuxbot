@@ -1,4 +1,4 @@
-import { GuildChannel, Message } from "discord.js";
+import { Channel, GuildChannel, Message } from "discord.js";
 
 // Source imports
 import { db } from "../../config/database";
@@ -9,10 +9,7 @@ import { getopts, getValue } from "../../util/utils";
 let help = cmdsHelp.channel;
 
 exports.run = async (msg: Message, args: string[]) => {
-  let channel:
-    | GuildChannel
-    | string
-    | undefined = msg.mentions.channels.first();
+  let channel: Channel | undefined | string = msg.mentions.channels.first();
   let options = getopts(args, {
     s: "--skip",
     c: "--channel",
