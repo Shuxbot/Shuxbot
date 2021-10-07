@@ -55,7 +55,7 @@ export class Leveling {
 
             Leveling.formatNickname(msg.member!, newLevel, uData.showlvl);
             let replyChannel: any = msg.channel;
-            let cmdsChannel = getChannel(undefined, channelType.cmds);
+            let cmdsChannel = getChannel(channelType.cmds);
 
             if (cmdsChannel && msg.guild!.channels.cache.has(cmdsChannel.id)) {
               replyChannel = getGuild(shuxSvId)!.channels.cache.find(

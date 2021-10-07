@@ -43,7 +43,7 @@ exports.run = (msg: Message, args: string[]) => {
     for (let v in channelType) {
       value = Number(v);
       if (isNaN(value)) break;
-      else ch = getChannel(undefined, value);
+      else ch = getChannel(value);
       message += `${value} : ${channelType[value]} - ${ch ? "✅" : "❌"}\n`;
     }
   }

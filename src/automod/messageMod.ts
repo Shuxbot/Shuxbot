@@ -23,7 +23,7 @@ let user: ShuxUser;
 export const messageMod = (msg: Message): void => {
   user = new ShuxUser(msg.author);
 
-  let currChannel = getChannel(msg.channel.id, channelType.common);
+  let currChannel = getChannel(channelType.common, msg.channel.id);
   if (currChannel && currChannel.skip) return;
 
   let pLevel = getPrivilegeLevel(msg.member!);

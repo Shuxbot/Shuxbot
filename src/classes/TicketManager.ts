@@ -60,7 +60,7 @@ export class TicketManager {
 
   private create(): void {
     let guild = this.shuxUser.guild;
-    let ticketsCategory = getChannel(undefined, channelType.tickets);
+    let ticketsCategory = getChannel(channelType.tickets);
 
     if (!ticketsCategory)
       return log.error("No hay una categoria para tickets especificada");

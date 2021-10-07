@@ -21,7 +21,7 @@ export class Log {
     if (!this.isLoggeable) return;
     if (typeof MessageEmbed == typeof log) isEmbed = true;
 
-    let logsCh = getChannel(undefined, channelType.logs);
+    let logsCh = getChannel(channelType.logs);
     if (!logsCh) return;
 
     let guild = getGuild(shuxSvId);

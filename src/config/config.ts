@@ -54,7 +54,7 @@ export const refreshData = async (data: data): Promise<void> => {
 
   if (data == "channels") {
     channels = refreshedData;
-    let logsChannel = getChannel(undefined, channelType.logs);
+    let logsChannel = getChannel(channelType.logs);
     if (logsChannel && !log.isLoggeable) log.isLoggeable = true;
   } else if (data == "reactions") reactions = refreshedData;
   else [filesRole, roles, colors] = sortRoles(refreshedData);

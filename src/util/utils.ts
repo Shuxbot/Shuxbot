@@ -105,8 +105,7 @@ export const emojiCounter = (str: string): [number, string[]] => {
 /**
  * Gets options from an array of strings
  * @param {string[]} argv - The array
- * @param {object} shortOpts - The short options object as
- * 'shortOption': '--longOption'
+ * @param {object} shortOpts - The short options object as 'shortOption': '--longOption'
  * @returns {string[]} An array with the options and the values
  * as ['option', 'value', 'option', 'value']
  */
@@ -265,12 +264,13 @@ export enum channelType {
  * Returns the first channel that meets the condition
  * chId == id || type == ch.type
  * @param {channelType} type - The channel type
+ * @param {string} id - The channel id
  * @returns {{ id: string, type: number; skip: boolean }} the channel ID
  */
 
 export const getChannel = (
-  id: string = "",
-  type: channelType
+  type: channelType,
+  id?: string,
 ): { id: string; type: number; skip: boolean } | null => {
   for (let chId in channels) {
     if (chId == id || channels[chId].type == type) {

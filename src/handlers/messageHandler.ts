@@ -43,7 +43,7 @@ export const messageHandler = (
   if (!prefix) return;
 
   let pLevel = getPrivilegeLevel(msg.member!);
-  let cmdsChannel = getChannel(undefined, channelType.cmds);
+  let cmdsChannel = getChannel(channelType.cmds);
 
   if (pLevel > 2 && cmdsChannel) {
     if (msg.guild!.channels.cache.has(cmdsChannel.id)) {

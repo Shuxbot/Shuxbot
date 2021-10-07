@@ -23,7 +23,7 @@ export class SuggestionManager {
   private send(): void {
     let msg = this.msg,
       user = this.user,
-      adminCh = getChannel(undefined, channelType.admin);
+      adminCh = getChannel(channelType.admin);
 
     if (!adminCh) {
       msg.reply("oops! aun no se ha configurado esta funcion!");
@@ -67,7 +67,7 @@ export class SuggestionManager {
    */
 
   public static answer(userId: string, answer: string): null | string {
-    let suggestCh = getChannel(undefined, channelType.suggestions);
+    let suggestCh = getChannel(channelType.suggestions);
     if (!suggestCh) {
       return "No hay canal de sugerencias especificado!";
     }
