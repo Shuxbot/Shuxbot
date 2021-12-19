@@ -11,7 +11,7 @@ There are just 2 main style guidelines We'd like you to follow, use Prettier and
 Please do the following:
 
 - Fork & clone the repository, and make sure you're on the **main** branch
-- Follow our [installation guide](https://github.com/afriguez/shuxbot/blob/main/README.md#installation)
+- Follow our [installation guide](https://github.com/afriguez/shuxbot/blob/dev/README.md#installation)
 - Code!
 - Submit a pull request and Make sure you follow the commit format specified down below
 
